@@ -25,8 +25,9 @@ has to find before they become production bugs.
 
 All 12 core functional flows passed — login, cart accuracy, checkout, and rapid
 double-click submission all behaved correctly with no duplicate orders. Cart state
-stayed consistent across two open tabs. One minor UX observation logged: the sort
-dropdown's arrow icon has a smaller clickable area than the visible label.
+stayed consistent across two open tabs. One minor UX observation logged: clicking
+directly on the sort dropdown's arrow icon does not open the dropdown, while clicking
+the visible text label does — a functional gap in the icon's click handler.
 
 ---
 
