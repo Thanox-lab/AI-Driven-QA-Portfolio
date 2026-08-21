@@ -1,120 +1,119 @@
-\# Root Cause Analysis Log — System 2
+<a id="top"></a>
+<div align="center">
 
+# 🧠 Root Cause Analysis Log — System 2
 
+[![Findings](https://img.shields.io/badge/findings-4-blue?style=flat-square)]()
+[![Method](https://img.shields.io/badge/method-5%20Whys-orange?style=flat-square)]()
+[![Verdict](https://img.shields.io/badge/verdict-no%20blocking%20defects-brightgreen?style=flat-square)]()
 
-\## Finding 1: Postman "Get Chained User" returned 404 after successful Create (201)
+⬅️ [README](./README.md) &nbsp;•&nbsp; 📄 [Full Report](./integrity-report.md) &nbsp;•&nbsp; 🗄️ [SQL Queries](./sql-queries.sql)
 
-\- \*\*Symptom:\*\* POST /users returns 201 with a new user ID, but GET /users/{id} 
+Every unexpected result gets a proper **5-Whys** dig instead of a lazy "known issue" label.
 
-&#x20; immediately after returns 404.
+</div>
 
-\- \*\*5 Whys:\*\*
+---
 
-&#x20; 1. Why 404? → The user ID doesn't exist when queried.
+### 📑 Jump to a finding
+[1️⃣ 404 after Create](#1️⃣-finding-1--404-on-get-chained-user-after-successful-create) · [2️⃣ Clean SQL results](#2️⃣-finding-2--8-sql-integrity-queries-came-back-clean) · [3️⃣ DELETE idempotency](#3️⃣-finding-3--delete-idempotency) · [4️⃣ Auth key handling](#4️⃣-finding-4--missinginvalid-api-key-handling)
 
-&#x20; 2. Why doesn't it exist? → reqres.in is a mock/simulated API.
+---
 
-&#x20; 3. Why does a mock API matter here? → POST requests return a fake generated ID 
+## 1️⃣ Finding 1 — 404 on "Get Chained User" after successful Create
 
-&#x20;    but never persist it to a real backend.
+> 🟡 **Symptom:** `POST /users` → **201** with a new ID, but `GET /users/{id}` right after → **404**.
 
-&#x20; 4. Why is this important? → In a real system, this exact symptom (success code 
+<details>
+<summary><b>🔍 Click to expand the 5-Whys trace</b></summary>
 
-&#x20;    but data not retrievable) would indicate a write-then-read consistency bug 
+| # | Why | Answer |
+|---|---|---|
+| 1 | Why the 404? | The user ID doesn't actually exist when queried. |
+| 2 | Why doesn't it exist? | `reqres.in` is a **mock/simulated** API. |
+| 3 | Why does mock matter? | POST returns a fake generated ID but never persists it to a real backend. |
+| 4 | Why is this important? | In a real system, this exact pattern (success code, unreadable data) signals a **write-then-read consistency bug** or **replica lag**. |
+| 5 | Root cause | No validation gap — this is expected mock-API behavior, not a genuine defect. |
 
-&#x20;    or replica lag.
+</details>
 
-&#x20; 5. Root cause → API validation gap is NOT present; this is expected mock-API 
+**✅ Conclusion:** Simulated backend limitation, not a real bug. In production, this same symptom would trigger a check for replication lag or write confirmation before reporting success.
 
-&#x20;    behavior, not a genuine data integrity issue.
+<div align="right"><a href="#top">↑ top</a></div>
 
-\- \*\*Conclusion:\*\* Simulated backend limitation, not a real defect. In a production 
+---
 
-&#x20; system, this same symptom would require checking replication lag or write 
+## 2️⃣ Finding 2 — 8 SQL integrity queries came back clean
 
-&#x20; confirmation before reporting success.
+> 🟡 **Symptom:** 5 of 8 queries (orphaned invoices, negative totals, duplicate emails, high-volume customers, non-purchasing customers) returned **0 rows**.
 
+<details>
+<summary><b>🔍 Click to expand the 5-Whys trace</b></summary>
 
+| # | Why | Answer |
+|---|---|---|
+| 1 | Why 0 rows everywhere? | Chinook is a well-formed **reference dataset**, not live production data. |
+| 2 | Why does that matter? | Reference datasets are pre-validated — no real-world data-entry errors. |
+| 3 | Why run the checks anyway? | To prove the queries themselves are correct and would catch real issues if they existed. |
+| 4 | Why is that valuable? | It proves the queries are **production-ready** and reusable. |
+| 5 | Root cause | No integrity issue in this dataset; the queries are validated and ready for a live database. |
 
-\## Finding 2: 8 SQL Integrity Queries — Clean Result Set
+</details>
 
-\- \*\*Symptom:\*\* 5 of 8 integrity queries (orphaned invoices, negative totals, 
+**✅ Conclusion:** A genuine **PASS**, not a bug. The deliverable here is the reusable, validated query suite — ready to flag real issues the moment it's pointed at live data.
 
-&#x20; duplicate emails, high-volume customers, non-purchasing customers) returned 
+<div align="right"><a href="#top">↑ top</a></div>
 
-&#x20; 0 rows.
+---
 
-\- \*\*5 Whys:\*\*
+## 3️⃣ Finding 3 — DELETE idempotency
 
-&#x20; 1. Why 0 rows across multiple integrity checks? → Chinook is a well-formed 
+> 🟡 **Symptom:** Calling `DELETE` on the same user ID **twice** both returned **204 No Content** — no error on the repeat call.
 
-&#x20;    reference dataset, not live production data.
+<details>
+<summary><b>🔍 Click to expand the 5-Whys trace</b></summary>
 
-&#x20; 2. Why does that matter? → Reference datasets are typically pre-validated 
+| # | Why | Answer |
+|---|---|---|
+| 1 | Why no error on 2nd call? | API doesn't check whether the resource still existed. |
+| 2 | Why is that OK? | REST idempotency principles state DELETE should be safe to call repeatedly. |
+| 3 | Why does this matter for QA? | Non-idempotent DELETEs cause client retries to throw false errors. |
+| 4 | Why test this specifically? | Common blind spot most manual testers skip. |
+| 5 | Root cause | No defect — this is correct RESTful idempotent design. |
 
-&#x20;    and don't carry real-world data entry errors.
+</details>
 
-&#x20; 3. Why run the checks anyway? → To prove the queries themselves are correct 
+**✅ Conclusion:** **PASS** — API follows RESTful idempotency best practice.
 
-&#x20;    and would catch real issues if they existed.
+<div align="right"><a href="#top">↑ top</a></div>
 
-&#x20; 4. Why is proving query correctness valuable? → It demonstrates the queries 
+---
 
-&#x20;    are production-ready and can be reused against live data.
+## 4️⃣ Finding 4 — Missing/invalid API key handling
 
-&#x20; 5. Root cause → No integrity issue exists in this dataset; queries are 
+> 🟡 **Symptom:** No `x-api-key` → **401**. Invalid `x-api-key` → **403**.
 
-&#x20;    validated and ready for use against a real production database.
+**Root cause:** Intentional design — the API correctly distinguishes *"no credentials"* (401 Unauthorized) from *"bad credentials"* (403 Forbidden), which is correct HTTP semantic usage.
 
-\- \*\*Conclusion:\*\* This is a UI/data trustworthiness "PASS" — not a bug. The 
+**✅ Conclusion:** **PASS** — auth layer is correctly implemented and testable.
 
-&#x20; value of this system is the reusable query suite, ready to flag real issues 
+<div align="right"><a href="#top">↑ top</a></div>
 
-&#x20; when run against live data.
+---
 
+<div align="center">
 
+### 🧾 Summary
 
-\## Finding 3: DELETE Idempotency
+| Finding | Verdict |
+|---|---|
+| 1. 404 after Create | 🟢 Expected mock-API behavior |
+| 2. Clean SQL results | 🟢 PASS — queries validated |
+| 3. DELETE idempotency | 🟢 PASS |
+| 4. Auth key handling | 🟢 PASS |
 
-\- \*\*Symptom:\*\* Calling DELETE on the same user ID twice both returned 204 
+**No blocking defects found.** See the [full integrity report](./integrity-report.md) for the Go/No-Go call.
 
-&#x20; No Content (no error on second call).
+⬅️ [Back to README](./README.md)
 
-\- \*\*5 Whys:\*\*
-
-&#x20; 1. Why does the 2nd DELETE not error? → API doesn't check if resource 
-
-&#x20;    already existed.
-
-&#x20; 2. Why is that acceptable? → REST idempotency principles state DELETE 
-
-&#x20;    should be safe to call multiple times.
-
-&#x20; 3. Why does this matter for QA? → Improper idempotency can cause client 
-
-&#x20;    retries to throw false errors.
-
-&#x20; 4. Why test this specifically? → It's a common blind spot in API testing 
-
-&#x20;    that most manual testers skip.
-
-&#x20; 5. Root cause → No defect — this is correct RESTful idempotent design.
-
-\- \*\*Conclusion:\*\* PASS — API follows RESTful idempotency best practice.
-
-
-
-\## Finding 4: Missing/Invalid API Key Handling
-
-\- \*\*Symptom:\*\* Requests without x-api-key returned 401; requests with an 
-
-&#x20; invalid key returned 403.
-
-\- \*\*Root cause:\*\* Intentional API design — distinguishes "no credentials" 
-
-&#x20; (401 Unauthorized) from "bad credentials" (403 Forbidden), which is 
-
-&#x20; correct HTTP semantic usage.
-
-\- \*\*Conclusion:\*\* PASS — Auth layer is correctly implemented and testable.
-
+</div>
