@@ -23,11 +23,14 @@ has to find before they become production bugs.
 
 ## 🔍 Key Findings
 
-All 12 core functional flows passed — login, cart accuracy, checkout, and rapid
-double-click submission all behaved correctly with no duplicate orders. Cart state
-stayed consistent across two open tabs. One minor UX observation logged: clicking
-directly on the sort dropdown's arrow icon does not open the dropdown, while clicking
-the visible text label does — a functional gap in the icon's click handler.
+All 12 scripted, risk-ranked test cases passed on the standard `standard_user` flow —
+login, cart accuracy, checkout, and rapid double-click submission all behaved
+correctly with no duplicate orders, and cart state stayed consistent across two open
+tabs. Additional adversarial/exploratory testing beyond the written test plan
+surfaced 5 defects and 1 UX observation — including a "Reset App State" sync bug, a
+stale browser-history session bug, and visual/functional defects across the app's
+special test accounts (`problem_user`, `performance_glitch_user`, `error_user`,
+`visual_user`). Full details in `defect-log.md`.
 
 ---
 
@@ -71,10 +74,14 @@ the visible text label does — a functional gap in the icon's click handler.
 | `test-plan.md` | Objective, scope, approach |
 | `clarification-log.md` | 5 unstated requirement assumptions identified upfront |
 | `test-cases.csv` | 12 risk-ranked test cases with full Actual/Status results |
-| `defect-log.md` | Observation log with root-cause reasoning |
+| `defect-log.md` | 5 defects + 1 observation, each with root-cause reasoning and screenshot evidence |
 | `screenshots/` | Execution evidence for all 12 test cases |
 
 ## ✅ Result
 
-**Go.** All 12/12 test cases passed with no functional defects. One low-severity UX
-observation logged for future refinement — does not block release.
+**Go, with follow-ups.** All 12 scripted test cases passed with no functional defects
+in the core flow. 5 additional defects and 1 UX observation were found through
+exploratory testing beyond the written plan — full evidence and root-cause reasoning
+for each in [`defect-log.md`](defect-log.md). None block release for the core
+`standard_user` journey, but BUG-01 through BUG-04 should be triaged before the next
+sprint.
