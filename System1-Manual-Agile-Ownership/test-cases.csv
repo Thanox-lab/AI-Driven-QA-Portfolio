@@ -1,7 +1,7 @@
 ID,Title,Risk,Precondition,Steps,Test Data,Expected,Actual,Status
-TC01,Valid login with standard_user,High,User on login page,"1. Enter username 'standard_user' 2. Enter password 'secret_sauce' 3. Click Login",standard_user / secret_sauce,User redirected to inventory page,,Pending
-TC02,Invalid login with wrong credentials,High,User on login page,"1. Enter wrong username/password 2. Click Login",wrong_user / wrong_pass,Error message displayed,,Pending
-TC03,Locked out user login,Medium,User on login page,"1. Enter locked_out_user 2. Enter secret_sauce 3. Click Login",locked_out_user / secret_sauce,Error: user locked out,,Pending
+TC01,Valid login with standard_user,High,User on login page,"1. Enter username 'standard_user' 2. Enter password 'secret_sauce' 3. Click Login",standard_user / secret_sauce,User redirected to inventory page,User was redirected to the Products (inventory) page successfully,Passed
+TC02,Invalid login with wrong credentials,High,User on login page,"1. Enter wrong username/password 2. Click Login",wrong_user / wrong_pass,Error message displayed,"Displayed: 'Epic sadface: Username and password do not match any user in this service'",Passed
+TC03,Locked out user login,Medium,User on login page,"1. Enter locked_out_user 2. Enter secret_sauce 3. Click Login",locked_out_user / secret_sauce,Error: user locked out,"Displayed: 'Epic sadface: Sorry, this user has been locked out.'",Passed
 TC04,Add single item to cart,High,User logged in,"1. Click Add to Cart on one item",N/A,Cart badge shows 1,,Pending
 TC05,Add multiple items to cart,High,User logged in,"1. Click Add to Cart on 3 items",N/A,Cart badge shows 3,,Pending
 TC06,Remove item from cart,Medium,Item already in cart,"1. Go to cart 2. Click Remove",N/A,Item removed and badge updates,,Pending
