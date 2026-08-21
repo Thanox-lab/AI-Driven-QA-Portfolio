@@ -13,7 +13,7 @@
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)]()
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white)]()
 
-Part of the **AI-Driven-QA-Portfolio**
+Part of the **[AI-Driven-QA-Portfolio](../)**
 
 </div>
 
@@ -295,7 +295,7 @@ Full 5-Whys breakdowns are in [`rca-log.md`](./rca-log.md). Summary:
 
 <div align="center">
 
-Part of the **[AI-Driven QA Portfolio](../)** — a series of projects demonstrating API testing, database validation, and structured root-cause analysis using AI-assisted QA workflows.
+Part of the **[AI-Driven-QA-Portfolio](../)** — a series of projects demonstrating API testing, database validation, and structured root-cause analysis using AI-assisted QA workflows.
 
 📄 Full narrative report → [`integrity-report.md`](./integrity-report.md) &nbsp;|&nbsp; 🔍 RCA details → [`rca-log.md`](./rca-log.md)
 
