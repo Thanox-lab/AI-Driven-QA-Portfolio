@@ -13,7 +13,7 @@
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)]()
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white)]()
 
-Part of the **[AI-Driven QA Portfolio](../)**
+Part of the **AI-Driven-QA-Portfolio**
 
 </div>
 
