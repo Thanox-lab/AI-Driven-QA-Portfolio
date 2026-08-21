@@ -12,7 +12,6 @@
 
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)]()
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white)]()
-[![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white)]()
 
 Part of the **[AI-Driven QA Portfolio](../)**
 
@@ -284,8 +283,6 @@ Full 5-Whys breakdowns are in [`rca-log.md`](./rca-log.md). Summary:
 | 🟠 **Postman** | API request design, chaining, environment variables, collection export |
 | 🌐 **reqres.in** | Mock REST API used for CRUD / auth lifecycle testing |
 | 🗄️ **SQLite (Chinook DB)** via sqliteonline.com | SQL-based data integrity testing |
-| 🖥️ **Command Prompt** | Screenshot organization / file management |
-| 📝 **Markdown** | Documentation & reporting |
 
 ### ▶️ Run the Postman Collection Yourself
 1. Open Postman → **Import**
