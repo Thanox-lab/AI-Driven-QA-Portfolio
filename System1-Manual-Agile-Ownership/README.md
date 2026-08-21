@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=2ECC71&center=true&vCenter=true&width=600&lines=Manual+QA+%26+Agile+Ownership;Risk-Based+Testing+on+SauceDemo;12%2F12+Test+Cases+Passed;6+Defects+Found+Beyond+the+Script" alt="Typing SVG" />
+</p>
+
 # System 1 — Manual QA & Agile Ownership
 
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
@@ -27,11 +31,11 @@ All 12 scripted, risk-ranked test cases passed on the standard `standard_user` f
 login, cart accuracy, checkout, and rapid double-click submission all behaved
 correctly with no duplicate orders, and cart state stayed consistent across two open
 tabs. Additional adversarial/exploratory testing beyond the written test plan
-surfaced 6 defects and 1 UX observation — including a "Reset App State" sync bug, a
-stale browser-history session bug, a login error banner overlapping the password
-field's clear icon, and visual/functional/data defects across the app's special test
-accounts (`problem_user`, `performance_glitch_user`, `error_user`, `visual_user`).
-Full details in `defect-log.md`.
+surfaced **6 defects and 1 UX observation** — a "Reset App State" sync bug, a stale
+browser-history session bug, a non-functional clear icon, and visual/functional/data
+defects across the app's special test accounts (`problem_user`,
+`performance_glitch_user`, `error_user`, `visual_user`). Full details in
+`defect-log.md`.
 
 ---
 
@@ -68,22 +72,28 @@ Full details in `defect-log.md`.
 
 ---
 
-## 🐞 Bug Evidence
+<details>
+<summary><strong>🐞 Bug Evidence (click to expand)</strong></summary>
 
-| Reset State Sync | Corrupted History Page | Second Login Fails |
+<br>
+
+| Reset State Sync (BUG-01) | Corrupted History Page (BUG-02) | Second Login Fails (BUG-03) |
 |---|---|---|
 | ![BUG01](screenshots/bug01-reset-state.png) | ![BUG02](screenshots/bug02-corrupted-history-page.png) | ![BUG03](screenshots/bug03-second-login-fail.png) |
-| BUG-01 | BUG-02 | BUG-03 |
 
-| problem_user | performance_glitch_user | error_user |
+| Clear Icon Non-Functional (BUG-04) | problem_user (BUG-05) | performance_glitch_user (BUG-05) |
 |---|---|---|
-| ![BUG05a](screenshots/bug05-problem-user.png) | ![BUG05b](screenshots/bug05-performance-glitch-user.png) | ![BUG05c](screenshots/bug05-error-user.png) |
-| BUG-05 | BUG-05 | BUG-05 |
+| ![BUG04](screenshots/bug04-clear-icon-nonfunctional.png) | ![BUG05a](screenshots/bug05-problem-user.png) | ![BUG05b](screenshots/bug05-performance-glitch-user.png) |
 
-| visual_user (layout) | visual_user (prices) | Login Error Overlap |
+| error_user (BUG-05) | visual_user (BUG-05) | Price Glitch (BUG-06) |
 |---|---|---|
-| ![BUG05d](screenshots/bug05-visual-user.png) | ![BUG05e](screenshots/bug05-visual-user-prices.png) | ![BUG06](screenshots/bug06-login-error-overlap.png) |
-| BUG-05 | BUG-05 | BUG-06 |
+| ![BUG05c](screenshots/bug05-error-user.png) | ![BUG05d](screenshots/bug05-visual-user.png) | ![BUG06](screenshots/bug06-price-glitch.png) |
+
+| Sort Dropdown Hitbox (OBS-01) |
+|---|
+| ![OBS01](screenshots/obs01-sort-dropdown.png) |
+
+</details>
 
 ---
 
@@ -105,3 +115,7 @@ exploratory testing beyond the written plan — full evidence and root-cause rea
 for each in [`defect-log.md`](defect-log.md). None block release for the core
 `standard_user` journey, but BUG-01 through BUG-04 should be triaged before the next
 sprint.
+
+<p align="center">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=80&section=footer" width="100%"/>
+</p>
