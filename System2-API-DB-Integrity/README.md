@@ -14,7 +14,7 @@
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white)]()
 [![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white)]()
 
-Part of the **[AI-Driven QA Portfolio](../)**
+Part of the **AI-Driven-QA-Portfolio**
 
 </div>
 
