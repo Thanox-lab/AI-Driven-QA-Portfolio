@@ -69,14 +69,30 @@ page's ability to process a fresh login submission.
 |---|---|---|
 | `problem_user` | All product images are replaced with an unrelated dog image | ![problem_user](screenshots/bug05-problem-user.png) |
 | `performance_glitch_user` | Only the Sauce Labs Bike Light renders as an oversized image on the product page; other products don't display correctly alongside it | ![performance_glitch_user](screenshots/bug05-performance-glitch-user.png) |
-| `error_user` | Checkout flow cannot be completed — order does not finish | — |
-| `visual_user` | Backpack shows a dog image; cart icon and cart-page buttons/layout are visibly misaligned (though the flow still completes through to the Thank You page) | ![visual_user](screenshots/bug05-visual-user.png) |
+| `error_user` | Last Name field on checkout does not accept text input; Continue click has no effect, so the order can never be completed | ![error_user](screenshots/bug05-error-user.png) |
+| `visual_user` | Backpack shows a dog image; cart icon and cart-page buttons/layout are visibly misaligned; product prices are also randomized/incorrect (e.g. $52.48 shown for a $29.99 item) — flow still completes through to the Thank You page | ![visual_user](screenshots/bug05-visual-user.png) ![visual_user prices](screenshots/bug05-visual-user-prices.png) |
 
 **Root Cause:** These are SauceDemo's built-in "broken" test accounts, intentionally
 seeded with front-end/data bugs to give QA testers realistic defects to find. Each
 user isolates a different bug category — data/image mapping, rendering, functional
 blocking, and layout/CSS.
 **Environment:** Chrome/Brave, Desktop
+
+---
+
+## BUG-06: Login error banner overlaps password field's clear icon
+**Severity:** Low | **Priority:** Low
+**Steps to Reproduce:**
+1. Try accessing a protected page (e.g. /inventory.html) directly without logging in
+2. Observe the login page that loads with the error banner shown
+**Expected:** Error banner should not cover the password field's clear ("x") icon
+**Actual:** The red error banner text renders directly on top of the password field's
+clear icon, making both hard to read and click in that spot.
+**Root Cause:** Error banner is likely absolutely positioned without accounting for
+the input field's icon, causing a layout/z-index overlap.
+**Environment:** Chrome/Brave, Desktop
+
+![Bug 06](screenshots/bug06-login-error-overlap.png)
 
 ---
 

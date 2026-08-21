@@ -27,10 +27,11 @@ All 12 scripted, risk-ranked test cases passed on the standard `standard_user` f
 login, cart accuracy, checkout, and rapid double-click submission all behaved
 correctly with no duplicate orders, and cart state stayed consistent across two open
 tabs. Additional adversarial/exploratory testing beyond the written test plan
-surfaced 5 defects and 1 UX observation — including a "Reset App State" sync bug, a
-stale browser-history session bug, and visual/functional defects across the app's
-special test accounts (`problem_user`, `performance_glitch_user`, `error_user`,
-`visual_user`). Full details in `defect-log.md`.
+surfaced 6 defects and 1 UX observation — including a "Reset App State" sync bug, a
+stale browser-history session bug, a login error banner overlapping the password
+field's clear icon, and visual/functional/data defects across the app's special test
+accounts (`problem_user`, `performance_glitch_user`, `error_user`, `visual_user`).
+Full details in `defect-log.md`.
 
 ---
 
@@ -67,6 +68,25 @@ special test accounts (`problem_user`, `performance_glitch_user`, `error_user`,
 
 ---
 
+## 🐞 Bug Evidence
+
+| Reset State Sync | Corrupted History Page | Second Login Fails |
+|---|---|---|
+| ![BUG01](screenshots/bug01-reset-state.png) | ![BUG02](screenshots/bug02-corrupted-history-page.png) | ![BUG03](screenshots/bug03-second-login-fail.png) |
+| BUG-01 | BUG-02 | BUG-03 |
+
+| problem_user | performance_glitch_user | error_user |
+|---|---|---|
+| ![BUG05a](screenshots/bug05-problem-user.png) | ![BUG05b](screenshots/bug05-performance-glitch-user.png) | ![BUG05c](screenshots/bug05-error-user.png) |
+| BUG-05 | BUG-05 | BUG-05 |
+
+| visual_user (layout) | visual_user (prices) | Login Error Overlap |
+|---|---|---|
+| ![BUG05d](screenshots/bug05-visual-user.png) | ![BUG05e](screenshots/bug05-visual-user-prices.png) | ![BUG06](screenshots/bug06-login-error-overlap.png) |
+| BUG-05 | BUG-05 | BUG-06 |
+
+---
+
 ## 📁 Artifacts in This Folder
 
 | File | Description |
@@ -74,13 +94,13 @@ special test accounts (`problem_user`, `performance_glitch_user`, `error_user`,
 | `test-plan.md` | Objective, scope, approach |
 | `clarification-log.md` | 5 unstated requirement assumptions identified upfront |
 | `test-cases.csv` | 12 risk-ranked test cases with full Actual/Status results |
-| `defect-log.md` | 5 defects + 1 observation, each with root-cause reasoning and screenshot evidence |
-| `screenshots/` | Execution evidence for all 12 test cases |
+| `defect-log.md` | 6 defects + 1 observation, each with root-cause reasoning and screenshot evidence |
+| `screenshots/` | Execution evidence for all 12 test cases plus bug evidence |
 
 ## ✅ Result
 
 **Go, with follow-ups.** All 12 scripted test cases passed with no functional defects
-in the core flow. 5 additional defects and 1 UX observation were found through
+in the core flow. 6 additional defects and 1 UX observation were found through
 exploratory testing beyond the written plan — full evidence and root-cause reasoning
 for each in [`defect-log.md`](defect-log.md). None block release for the core
 `standard_user` journey, but BUG-01 through BUG-04 should be triaged before the next
